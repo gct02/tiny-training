@@ -3,7 +3,7 @@ from copy import deepcopy
 import json
 from textwrap import indent
 from types import new_class
-from pandas import isna
+# from pandas import isna
 from sklearn.preprocessing import KernelCenterer
 
 import torch
