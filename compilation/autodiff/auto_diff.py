@@ -201,12 +201,12 @@ class AutoDiff(ExprVisitor):
                         depthwise_sparse_bp = sparse_depth_wise_mcunetconv2d_grad
                     if self.sparse_op_idx[self.op_idx] < 1:
                         if ks == 1:
-                            print(
-                                f"[point-wise][int8: {self.int8_grad}] Special handlding for sparse bp nn.mcuconv2d",
-                                self.op_idx,
-                                call.args[1].checked_type.shape,
-                                self.sparse_op_idx[self.op_idx],
-                            )
+                            # print(
+                            #     f"[point-wise][int8: {self.int8_grad}] Special handlding for sparse bp nn.mcuconv2d",
+                            #     self.op_idx,
+                            #     call.args[1].checked_type.shape,
+                            #     self.sparse_op_idx[self.op_idx],
+                            # )
                             gs = in_chanel_sparse_bp(
                                 call, grad_output, topk=self.sparse_op_idx[self.op_idx]
                             )
@@ -214,12 +214,12 @@ class AutoDiff(ExprVisitor):
                             attrs.groups == data_shape[1]
                             and data_shape[1] == weight_shape[0]
                         ):
-                            print(
-                                f"[depth-wise][int8: {self.int8_grad}] Special handlding for sparse bp nn.mcuconv2d",
-                                self.op_idx,
-                                call.args[1].checked_type.shape,
-                                self.sparse_op_idx[self.op_idx],
-                            )
+                            # print(
+                            #     f"[depth-wise][int8: {self.int8_grad}] Special handlding for sparse bp nn.mcuconv2d",
+                            #     self.op_idx,
+                            #     call.args[1].checked_type.shape,
+                            #     self.sparse_op_idx[self.op_idx],
+                            # )
                             gs = depthwise_sparse_bp(
                                 call, grad_output, topk=self.sparse_op_idx[self.op_idx]
                             )
@@ -228,12 +228,12 @@ class AutoDiff(ExprVisitor):
                                 f"ks={ks}, {attrs.groups}, {data_shape[1]}, {weight_shape[0]}"
                             )
                     else:
-                        print(
-                            f"[full-update {ks}x{ks}][int8: {self.int8_grad}] Special handlding for sparse bp nn.mcuconv2d",
-                            self.op_idx,
-                            call.args[1].checked_type.shape,
-                            self.sparse_op_idx[self.op_idx],
-                        )
+                        # print(
+                        #     f"[full-update {ks}x{ks}][int8: {self.int8_grad}] Special handlding for sparse bp nn.mcuconv2d",
+                        #     self.op_idx,
+                        #     call.args[1].checked_type.shape,
+                        #     self.sparse_op_idx[self.op_idx],
+                        # )
                         gs = grad_fn(call, grad_output)
                     self.sparse_update_meta_info.append(
                         {
@@ -248,13 +248,13 @@ class AutoDiff(ExprVisitor):
                     # gs = sparse_mcunetconv2d_grad(call, grad_output, topk=self.sparse_op_idx[self.op_idx])
                 else:
                     gs = grad_fn(call, grad_output)
-                print(
-                    "OP ",
-                    self.op_idx,
-                    call.args[0].checked_type.shape,
-                    "=>",
-                    call.checked_type.shape,
-                )
+                # print(
+                #     "OP ",
+                #     self.op_idx,
+                #     call.args[0].checked_type.shape,
+                #     "=>",
+                #     call.checked_type.shape,
+                # )
                 self.op_idx += 1
 
             # assign gradients to each input args
