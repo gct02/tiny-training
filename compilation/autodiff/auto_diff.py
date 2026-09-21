@@ -288,7 +288,6 @@ class AutoDiff(ExprVisitor):
     ):
         names = []
         needed_gradients = []
-        print("Obtaining gradients")
         # time.sleep(2)
         for v in self.vars:
             if v.name_hint in self.var_grads and filter_fn(

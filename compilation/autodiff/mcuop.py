@@ -214,27 +214,27 @@ def extract_mcuconv2d_params(module, args, param_dtype="int8"):
     params = {}
     # weight
     vname = args[0].name_hint
-    vtensor = module.weight.detach().numpy().astype(param_dtype)
+    vtensor = module.weight.cpu().detach().numpy().astype(param_dtype)
     params[vname] = tvm.nd.array(vtensor)
 
     # bias
     vname = args[1].name_hint
-    vtensor = module.bias.detach().numpy().astype("int32")
+    vtensor = module.bias.cpu().detach().numpy().astype("int32")
     params[vname] = tvm.nd.array(vtensor)
 
     # 0_zero_x
     vname = args[2].name_hint
-    vtensor = module.zero_x.detach().view(1).numpy().astype(param_dtype)
+    vtensor = module.zero_x.cpu().detach().view(1).numpy().astype(param_dtype)
     params[vname] = tvm.nd.array(vtensor)
 
     # 0_zero_y
     vname = args[3].name_hint
-    vtensor = module.zero_y.detach().view(1).numpy().astype(param_dtype)
+    vtensor = module.zero_y.cpu().detach().view(1).numpy().astype(param_dtype)
     params[vname] = tvm.nd.array(vtensor)
 
     # effective_scale
     vname = args[4].name_hint
-    vtensor = module.effective_scale.detach().numpy().astype("float32")
+    vtensor = module.effective_scale.cpu().detach().numpy().astype("float32")
     params[vname] = tvm.nd.array(vtensor)
 
     vs = vname.split("_")[:-1]
@@ -267,27 +267,27 @@ def extract_mcuadd_params(module, args, param_dtype="int8"):
     params = {}
 
     vname = args[0].name_hint
-    vtensor = module.zero_x1.detach().view(1).numpy().astype(param_dtype)
+    vtensor = module.zero_x1.cpu().detach().view(1).numpy().astype(param_dtype)
     params[vname] = tvm.nd.array(vtensor)
 
     vname = args[1].name_hint
-    vtensor = module.zero_x2.detach().view(1).numpy().astype(param_dtype)
+    vtensor = module.zero_x2.cpu().detach().view(1).numpy().astype(param_dtype)
     params[vname] = tvm.nd.array(vtensor)
 
     vname = args[2].name_hint
-    vtensor = module.scale_x1.detach().numpy().astype("float32")
+    vtensor = module.scale_x1.cpu().detach().numpy().astype("float32")
     params[vname] = tvm.nd.array(vtensor)
 
     vname = args[3].name_hint
-    vtensor = module.scale_x2.detach().numpy().astype("float32")
+    vtensor = module.scale_x2.cpu().detach().numpy().astype("float32")
     params[vname] = tvm.nd.array(vtensor)
 
     vname = args[4].name_hint
-    vtensor = module.zero_y.detach().view(1).numpy().astype(param_dtype)
+    vtensor = module.zero_y.cpu().detach().view(1).numpy().astype(param_dtype)
     params[vname] = tvm.nd.array(vtensor)
 
     vname = args[5].name_hint
-    vtensor = module.scale_y.detach().numpy().astype("float32")
+    vtensor = module.scale_y.cpu().detach().numpy().astype("float32")
     params[vname] = tvm.nd.array(vtensor)
 
     return params

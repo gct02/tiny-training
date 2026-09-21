@@ -89,7 +89,7 @@ def parsed_backward_config(backward_config, model):
     return backward_config
 
 
-def nelem_saved_for_backward(model, sample_input, backward_config, verbose=True, plot=False):
+def nelem_saved_for_backward(model, sample_input, backward_config, verbose=False, plot=False):
     """
     calculate the memory required when saving for backward
     :param model:
@@ -214,7 +214,7 @@ def nelem_saved_for_backward(model, sample_input, backward_config, verbose=True,
     return total_usage
 
 
-def prepare_model_for_backward_config(model, backward_config, verbose=True):
+def prepare_model_for_backward_config(model, backward_config, verbose=False):
     def _get_conv_w_norm(_conv):
         _o, _i, _h, _w = _conv.weight.shape
         if _is_depthwise_conv(_conv):
@@ -321,7 +321,7 @@ def _test_nelem_saved_for_backward():
     #  'weight_select_criteria': 'magnitude'}
     backward_config = parsed_backward_config(backward_config, model)
     prepare_model_for_backward_config(model, backward_config)
-    nelem_saved_for_backward(model, sample_input, backward_config, verbose=True, plot=True)
+    nelem_saved_for_backward(model, sample_input, backward_config, verbose=False, plot=True)
 
 
 def _get_nelem_curve():
@@ -359,7 +359,7 @@ def _get_nelem_curve():
         # backward_config['weight_update_ratio'] = 0.25
         backward_config = parsed_backward_config(backward_config, model)
         prepare_model_for_backward_config(model, backward_config)
-        n_elem = nelem_saved_for_backward(model, sample_input, backward_config, verbose=True, plot=False)
+        n_elem = nelem_saved_for_backward(model, sample_input, backward_config, verbose=False, plot=False)
         out.append(n_elem)
         print(i, round(n_elem / 8 / 1024))
     print(out)

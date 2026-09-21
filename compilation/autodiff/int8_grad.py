@@ -455,7 +455,7 @@ def sparse_in_channel_mcunetconv2d_int8grad(orig, grad, topk=None):
 
 
 def sparse_depth_wise_mcunetconv2d_int8grad(orig, grad, topk=None):
-    from autodiff.diff_ops import (
+    from compilation.autodiff.diff_ops import (
         broadcast_to_like,
         const,
         get_const_tuple,

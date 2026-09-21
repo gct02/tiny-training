@@ -176,7 +176,6 @@ def generated_backward_graph(mod, op_idx, method, sparse_bp_config=None, int8_bp
                 update_counter["bias"] += 1
             if "_weight" in name:
                 update_counter["weight"] += 1
-        print("total update ", update_counter)
         return bwd_mod, bwd_names, sparse_meta_info
     else:
         raise NotImplementedError
